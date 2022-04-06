@@ -1,0 +1,256 @@
+{{!调用题库专用模板--答题时}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise</title>
+    <link href="/main.css" rel="stylesheet">
+    <style>
+        .bank {
+            padding: 25px 30px 30px 40px;
+            margin: 20px 0 0 180px;
+            width: 750px;
+            background-color: rgba(255, 255, 255, 0.911);
+            border-radius: 10px;
+            box-shadow: 2px 5px 5px 2px rgba(95, 95, 95, 0.384);
+        }
+
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 30px;
+        }
+
+        /*radio样式*/
+        label {
+            line-height: 25px;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 5px;
+            color: #777;
+        }
+
+        .radio_type {
+            width: 13px;
+            height: 13px;
+            appearance: none;
+            position: relative;
+        }
+
+        .radio_type:before {
+            content: '';
+            width: 13px;
+            height: 13px;
+            border: 1px solid #aaaaaa;
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+            box-shadow: 0.5px 0.5px 0.5px 1px rgb(204, 204, 204);
+        }
+
+        .radio_type:checked:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 1px solid #4e7dc4;
+            background: #4e7dc4;
+            display: inline-block;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .radio_type:checked:after {
+            content: '';
+            width: 10px;
+            height: 5px;
+            border: 2px solid white;
+            border-top: transparent;
+            border-right: transparent;
+            text-align: center;
+            display: block;
+            position: absolute;
+            top: 6px;
+            left: 5px;
+            vertical-align: middle;
+            transform: rotate(-45deg);
+        }
+
+        .radio_type:checked+label {
+            color: #c59c5a;
+        }
+
+        .xuanxiang {
+            color: black;
+            font-size: 17px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 25px;
+            text-align: center;
+        }
+
+        .splitline {
+            background-color: rgb(197, 196, 196);
+            height: 1px;
+            margin: 30px 15px 0px 0px;
+        }
+
+        .part {
+            font-size: 18px;
+        }
+
+        .part>li {
+
+            margin: 10px 0;
+        }
+
+        .part {
+            padding-left: 10px;
+        }
+
+        ol {
+            margin: 0px;
+            padding: 0;
+        }
+
+        .choice {
+            margin-top: 20px;
+        }
+
+        .choice li {
+            display: inline;
+
+        }
+
+        /* -----------提交按钮样式---------- */
+
+        #submit {
+            padding: 0.60em 1.6em;
+            margin-left: 315px;
+            color: rgba(41, 82, 172, 0.801);
+            border: 2px solid rgba(41, 82, 172, 0.801);
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 0.3em;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #submit:before {
+            content: "";
+            background-color: rgba(255, 255, 255, 0.5);
+            height: 100%;
+            width: 3em;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -4.5em;
+            transform: skewX(-45deg) translateX(0);
+            transition: none;
+        }
+
+        #submit:hover {
+            background-color: rgba(41, 82, 172, 0.801);
+            color: #fff;
+            border-bottom: 4px solid rgba(41, 82, 172, 0.801);
+        }
+
+        #submit:hover:before {
+            transform: skewX(-45deg) translateX(13.5em);
+            transition: all 0.5s ease-in-out;
+        }
+        .req {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 300;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+    <div class="bank">
+        <h4 class="req">Choose the one that best completes the sentence or answer the question.</h4>
+        <form action="/yes" method="post">
+
+            <ol class="part">
+                {{#each banks}}
+                <li>
+                    <div class="question">{{this.question}}</div>
+
+                    <ol class="choice" style="list-style-type: none;">
+                        <li>
+                            <label>
+                                <input type="radio" class="radio_type" name="{{this.id}}" value="A">
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">A. {{this.choice_A}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <label>
+                                <input type="radio" class="radio_type" name="{{this.id}}" value="B">
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">B. {{this.choice_B}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <label>
+                                <input type="radio" class="radio_type" name="{{this.id}}" value="C">
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">C. {{this.choice_C}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <label>
+                                <input type="radio" class="radio_type" name="{{this.id}}" value="D">
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">D. {{this.choice_D}}</span>
+                            </label>
+                        </li><br>
+                        <div class="splitline"></div>
+                    </ol>
+
+                    <br>
+                    <input type="text" value="{{this.id}}" name="timu_id" style="display: none;">
+                </li>
+                {{/each}}
+            </ol>
+            <br>
+
+
+            <div>
+                <input type="submit" name="submit" id="submit" value="确认交卷">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        /*显示和隐藏退出登录*/
+        var time = 1;
+        var logout = document.querySelector("#logout");
+        function show() {
+            if (time % 2 == 0) {
+                logout.style.display = "none";
+                time++;
+            } else {
+                logout.style.display = "block";
+                time++;
+            }
+        }
+    </script>
+</body>
+
+</html>

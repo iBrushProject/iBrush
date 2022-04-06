@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+<link rel="icon" href="../logoIcon.png">
+    <style>
+        body {
+            background-image: linear-gradient(to left, rgb(15, 151, 241), rgb(59, 59, 230), rgb(0, 195, 255));
+        }
+
+        .form-container {
+            margin: 52px 25%;
+          
+            width: 400px;
+            height: 450px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10%;
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .input-field {
+            max-width: 300px;
+            width: 80%;
+            height: 45px;
+            background-color: #f0f0f0;
+            margin: 50px auto;
+            border-radius: 35px;
+        }
+
+        .input-field input {
+            background: none;
+            outline: none;
+            border: none;
+            line-height: 45px;
+            width: 90%;
+            font-weight: 100;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .input-field input::placeholder {
+            color: #aaa;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .submit {
+            width: 125px;
+            height: 40px;
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            cursor: pointer;
+            background-color: #5995fd;
+            color: white;
+            font-size: larger;
+            margin: 10px 0;
+        }
+
+        #bigimg {
+            margin: 0;
+            position: absolute;
+            top: 100px;
+            left: 60%;
+        }
+
+        #bigimg img {
+            width: 360px;
+            height: 360px;
+        }
+
+        .slogan {
+            width: 450px;
+            height: 50px;
+            font-size: 35px;
+            font-weight: bold;
+            padding-top: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        #pd {
+            font-weight: bold;
+            
+            top: 14px;
+        }
+
+        .icon {
+            visibility: hidden;
+        }
+        .new {
+            position: relative;
+        }
+        .img-ico {
+            height: 24px;
+            width: 24px;
+            position: absolute;
+            top: 11px;
+            left: 85%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="whole">
+        <div class="form-container">
+            <form action="/signup" method="post">
+
+                <h2 class="title">用户注册</h2>
+
+                <div class="input-field new">
+
+                    <input type="text" name="newaccount" id="username" placeholder="请输入用户名，不超过6个字符">
+                    <div class="img-ico">
+                        <img class="icon" src="yes.svg" width="24px" height="24px">
+                    </div>
+                    <div id="pd"></div>
+                </div>
+
+                <div class="input-field">
+                    <input type="password" name="password1" placeholder="请设置密码,不少于3个字符" id="password1">
+                </div>
+
+                <div class="input-field">
+                    <input type="password" name="password2" placeholder="请确认密码，不少于3个字符" id="password2">
+                </div>
+
+                <input type="submit" class="submit" value="注册">
+            </form>
+
+            <div id="bigimg">
+                <img src="2.svg" width="400px" height="400px">
+                <div class="slogan">
+                    马上注册，开启刷题之旅!
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="/jquery-3.6.0.min.js"></script>
+    <script>
+        let username = document.querySelector("#username");
+        let submit = document.querySelector(".submit");
+
+        username.onkeyup = function () {
+            $.get("/checkUser", { username: username.value }).done(function (data) {
+                let pd = document.querySelector("#pd");
+                let icon = document.querySelector(".icon");
+                if (data.available) {
+                    pd.innerHTML = "该用户名可用";
+                    pd.style.color = "green";
+                    icon.style.visibility = "visible";
+                    icon.src = "yes.svg";
+                }
+                else {
+                    pd.innerHTML = "该用户名已被占用";
+                    pd.style.color = "red";
+                    icon.style.visibility = "visible";
+                    icon.src = "no.svg";
+                };
+            });
+            submit.onclick = function () {
+                let username = document.querySelector("#username").value;
+                
+
+                if (username.length > 6) {
+                    alert("用户名不能超过6个字符长度！");
+                };
+                let password1 = document.querySelector("#password1").value;
+                let password2 = document.querySelector("#password2").value;
+                if(password1 !== password2){
+                        alert("设置未完整！请完善密码，且密码不少于3位字符,请确认两次密码输入一致！");
+                }
+            }
+        };
+
+
+
+
+    </script>
+</body>
+
+</html>

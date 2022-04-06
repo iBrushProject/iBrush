@@ -1,0 +1,124 @@
+body{
+    background-image: linear-gradient(to left,rgb(15, 151, 241),rgb(59, 59, 230),rgb(0, 195, 255));
+    
+}
+.text{
+    color:aliceblue; 
+    position: absolute; 
+    left:460px;
+    margin:10px;
+}
+.title{
+    margin: 20px 0;
+}
+.form-container{
+    margin:100px 10%;
+    width:350px;
+    height:400px;
+    background-color:rgb(255, 255, 255);
+    border-radius: 10%;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.input-field{
+    max-width: 300px;
+    width:80%;
+    height:45px;
+    background-color:#f0f0f0 ;
+    margin:20px auto;
+    border-radius: 35px;
+}
+.input-field input{
+    background:none;
+    outline:none;
+    border:none;
+    line-height: 45px;
+    width: 90%;
+    font-weight: 100;
+    text-align: center;
+    font-size: 16px;
+}
+.input-field input::placeholder{
+    color:#aaa;
+    font-weight: 800;
+    font-size: 14px;
+}
+.submit{
+    width:125px;
+    height:40px;
+    border:none;
+    outline:none;
+    border-radius: 40px;
+    cursor: pointer;
+    background-color: #5995fd;
+    color:white;
+    font-size: larger;
+    margin:10px 0;
+}
+#bigimg{
+    position: absolute;
+    top: 100px;
+    left:60%;
+    
+}
+#bigimg img{
+    width: 360px;
+    height: 360px;
+}
+#bigimg div{
+    text-align: center;
+}
+.sign::after{
+    content:'';
+    position: absolute;
+    width: 2580px;
+    height: 1895px;
+    border-radius: 50%;
+    background:linear-gradient(-45deg, white,rgb(153, 153, 226));
+    top:200px;
+    right:50%;
+    transform:translateY(-50%);
+    z-index: -1;
+}
+li{
+    list-style-type: none;
+}
+
+.slogan{
+    width: 400px;
+    height:50px;
+    font-size: 40px;
+    font-weight:bold ;
+    padding-top: 20px;
+    color: white;
+}
+.media{
+    margin: 15px 0;
+    font-size: 12px;
+    font-weight: 400;
+}
+.medias{
+    display: block;
+}
+.medias ul{
+    list-style: none;
+    margin: 10px auto 5px;
+    width: 240px;
+    height: 50px;
+    padding: 0;
+}
+.medias ul li{
+    float: left;
+    margin: 0 10px;
+}
+.medias img{
+    width: 40px;
+}
+.signup{
+    margin: auto;
+    width: 200px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+}

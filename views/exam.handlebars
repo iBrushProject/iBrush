@@ -1,0 +1,499 @@
+{{!调用题库专用模板--答题时}}
+<title>Exam</title>
+<style>
+    /*----------用户那个圈圈的样式--------*/
+
+ .log {
+    width:110px;
+    height: 30px;
+    margin-top: 10px;
+    position: fixed;
+    top: 0.25em;
+    right: 18px;
+    z-index: 1000;
+    border: 2px solid #428cfc;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    display: inline-block;
+    background-color: white;
+}
+
+.log:before {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.438);
+    height: 100%;
+    width: 1em;
+    display: block;
+    position: absolute;
+    top: -0.5em;
+    left: -0.1em;
+    transform: skewX(-45deg) translateX(0);
+    transition: none;
+}
+
+.log:hover {
+    background-color: #E3ECFA;
+    color: #fff;
+}
+
+.log:hover:before {
+    transform: skewX(-45deg) translateX(13.5em);
+    transition: all 0.5s ease-in-out;
+}
+
+.user {
+    width: 90px;
+   
+    display: inline-block;
+    color: #428cfc;
+    margin-top: 6px;
+    text-align: center;
+} 
+
+/* 用户旁边的更多属性 */
+#more {
+    float: right;
+    position: absolute;
+    right: 9px;
+    top: 8.5px;
+    cursor: pointer;
+}
+
+/* 退出登录样式 */
+#logout {
+    width: 100px;
+    background-color: white;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 5px;
+    line-height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+}
+
+#logout input {
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+    /*计时器*/
+    .container {
+        width: 160px;
+        height: 140px;
+        background-color: transparent;
+        float: right;
+        display: inline-block;
+        margin-top: 40px;
+        right: 40px;
+        text-align: center;
+        position: fixed;
+        /*--移动整个倒计时的位置*/
+    }
+
+    #btn {
+        font-size: 18px;
+        padding: 5px 10px;
+        background-color: rgb(167, 174, 182);
+        margin: 10px auto;
+        border-color: rgba(180, 179, 179, 0.473);
+        border-radius: 10px;
+    }
+
+    .countdown {
+        display: flex;
+        /*时、分并排*/
+    }
+
+    #minute,
+    #second {
+        position: relative;
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background: rgb(68, 68, 68);
+        color: #fff;
+        margin: 10px 10px;
+        font-style: 4em;
+        font-weight: 600;
+    }
+
+    #dot {
+        width: 8px;
+        height: 40px;
+        margin: 10px 0;
+        line-height: 40px;
+        font-size: 30px;
+        text-align: center;
+        color: #333;
+        font-style: 4em;
+        font-weight: 600;
+    }
+
+
+    .bank {
+        padding: 25px 30px 30px 40px;
+        margin: 20px 0 0 180px;
+        width: 680px;
+        background-color: rgba(255, 255, 255, 0.911);
+        border-radius: 10px;
+        box-shadow: 2px 5px 5px 2px rgba(95, 95, 95, 0.384);
+    }
+
+    .question {
+        font-size: 18px;
+        font-weight: bold;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        line-height: 30px;
+    }
+
+    /*radio样式*/
+    label {
+        line-height: 25px;
+        display: inline-block;
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #777;
+    }
+
+    .radio_type {
+        width: 13px;
+        height: 13px;
+        appearance: none;
+        position: relative;
+    }
+
+    .radio_type:before {
+        content: '';
+        width: 13px;
+        height: 13px;
+        border: 1px solid #aaaaaa;
+        display: inline-block;
+        border-radius: 50%;
+        vertical-align: middle;
+        box-shadow: 0.5px 0.5px 0.5px 1px rgb(204, 204, 204);
+    }
+
+    .radio_type:checked:before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        border: 1px solid #4e7dc4;
+        background: #4e7dc4;
+        display: inline-block;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+
+    .radio_type:checked:after {
+        content: '';
+        width: 10px;
+        height: 5px;
+        border: 2px solid white;
+        border-top: transparent;
+        border-right: transparent;
+        text-align: center;
+        display: block;
+        position: absolute;
+        top: 6px;
+        left: 5px;
+        vertical-align: middle;
+        transform: rotate(-45deg);
+    }
+
+    .radio_type:checked+label {
+        color: #c59c5a;
+    }
+
+    .xuanxiang {
+        color: black;
+        font-size: 17px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        line-height: 25px;
+        text-align: center;
+    }
+
+    .splitline {
+        background-color: rgb(197, 196, 196);
+        height: 1px;
+        margin: 30px 15px 0px 0px;
+    }
+
+    .part {
+        font-size: 18px;
+    }
+
+    .part>li {
+
+        margin: 10px 0;
+    }
+
+    .part {
+        padding-left: 10px;
+    }
+
+    ol {
+        margin: 0px;
+        padding: 0;
+    }
+
+    .choice {
+        margin-top: 20px;
+    }
+
+    .choice li {
+        display: inline;
+
+    }
+
+    #submit {
+        padding: 0.60em 1.6em;
+        margin: 0 280px;
+        color: #0a95FF;
+        border: 2px solid #0a95FF;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+        border-radius: 0.3em;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #submit:before {
+        content: "";
+        background-color: rgba(255, 255, 255, 0.5);
+        height: 100%;
+        width: 3em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -4.5em;
+        transform: skewX(-45deg) translateX(0);
+        transition: none;
+    }
+
+    #submit:hover {
+        background-color: #3336fd;
+        color: #fff;
+        border-bottom: 4px solid #1e21ce;
+    }
+
+    #submit:hover:before {
+        transform: skewX(-45deg) translateX(13.5em);
+        transition: all 0.5s ease-in-out;
+    }
+
+    .blocked {
+        position: relative;
+    }
+
+    .glass {
+        margin-top: -35px;
+        width: 750px;
+        height: 2520px;
+        position: absolute;
+        border-radius: 10px;
+        background: rgb(255, 255, 255);
+        box-shadow: 2px 2px 2px 2px white;
+        top: 0;
+        left: -40px;
+    }
+
+    .notice {
+        height:50px;
+        line-height:50px;
+        text-align: center;
+        margin: 100px auto 0 auto;
+        font-size: 30px;
+        z-index: 10;
+    }
+
+    #lastSub {
+        padding: 0.60em 1.6em;
+        margin: 80px 310px;
+        color: #0a95FF;
+        border: 2px solid #0a95FF;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+        float: unset;
+        border-radius: 0.3em;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #lastSub:before {
+        content: "";
+        background-color: rgba(255, 255, 255, 0.5);
+        height: 100%;
+        width: 3em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -4.5em;
+        transform: skewX(-45deg) translateX(0);
+        transition: none;
+    }
+
+    #lastSub:hover {
+        background-color: #3336fd;
+        color: #fff;
+        border-bottom: 4px solid #1e21ce;
+    }
+
+    #lastSub:hover:before {
+        transform: skewX(-45deg) translateX(13.5em);
+        transition: all 0.5s ease-in-out;
+    }
+</style>
+</head>
+
+<body>
+    <div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+    {{!倒计时器的html}}
+    <div class="container">
+        <button id="btn">⏰ 开始倒计时</button>
+        <div class="countdown">
+            <div id="minute">10 分</div>
+            <div id="dot">:</div>
+            <div id="second">00 秒</div>
+        </div>
+
+    </div>
+    {{!开始按钮}}
+
+    <div class="bank">
+        <form action="/yes" method="post" class="blocked">
+
+            <ol class="part">
+                {{#each banks}}
+                <li>
+                    <div class="question">{{this.question}}</div>
+
+                    <ol class="choice" style="list-style-type: none;">
+                        <li>
+                            <input type="radio" class="radio_type" id="radiotype" name="{{this.id}}" value="A">
+                            <label>
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">A. {{this.choice_A}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <input type="radio" class="radio_type" id="radiotype" name="{{this.id}}" value="B">
+                            <label>
+
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">B. {{this.choice_B}}</span>
+                            </label>
+                        </li><br>
+                        <li><input type="radio" class="radio_type" id="radiotype" name="{{this.id}}" value="C">
+                            <label>
+
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">C. {{this.choice_C}}</span>
+                            </label>
+                        </li><br>
+                        <li><input type="radio" class="radio_type" id="radiotype" name="{{this.id}}" value="D">
+                            <label>
+
+                                <label for="radio1"></label>
+                                <span class="xuanxiang">D. {{this.choice_D}}</span>
+                            </label>
+                        </li><br>
+                        <div class="splitline"></div>
+                    </ol>
+
+                    <br>
+                    <input type="text" value="{{this.id}}" name="timu_id" style="display: none;">
+                </li>
+                {{/each}}
+            </ol>
+            <br>
+
+
+            <div class="glass" id="glass">
+                <div class="notice" id="notice">
+                    点击倒计时开始答题！
+                </div>
+                <button name="submit2" id="lastSub" style="display:none;">提交试卷</button>
+            </div>
+
+            <div>
+                <button name="submit" id="submit" style="display:none;">确认交卷</button>
+            </div>
+        </form>
+    </div>
+
+    {{!js}}
+    <script>
+        window.onload = function () {
+            var btn = document.getElementById("btn");
+            var submit = document.getElementById("submit");
+            //倒计时未开始，不能交卷
+
+            btn.onclick = function set() {
+                //倒计时开始，可以答题
+                 btn.disabled="true";
+                let glass = document.querySelector("#glass");
+                let notice = document.querySelector("#notice");
+                let submit2 = document.querySelector("#lastSub");
+                glass.style.display = "none";
+                notice.style.display = "none";
+                submit.style.display = "unset";
+                //?分钟倒计时 
+                var maxtime = 10*60;
+
+                //倒计时函数
+                function count() {
+                    //当倒计时为0时，停止倒计，并使选项按钮失效，只能交卷
+                    if (maxtime == 0) {
+
+                        alert("时间到，答题失效，请交卷！否则无分数");
+                        clearInterval(stop);
+                        notice.innerHTML = "请提交试卷！";
+                        glass.style.display = "block";
+                        notice.style.display = "block";
+                        submit2.style.display = "unset";
+                        submit.style.display = "none";
+                       
+                    } else {
+                        maxtime--;
+                        var m = Math.floor(maxtime / 60);
+                        var s = Math.floor(maxtime % 60);
+                        document.getElementById('minute').innerText = m + "" + "分";
+                        document.getElementById('second').innerText = s + "" + "秒";
+                    }
+
+                };
+                //每隔一秒递减
+                stop = setInterval(count, 1000);
+            };
+        }
+        /*显示和隐藏退出登录*/
+        var time = 1;
+        var logout = document.querySelector("#logout");
+        function show() {
+            if (time % 2 == 0) {
+                logout.style.display = "none";
+                time++;
+            } else {
+                logout.style.display = "block";
+                time++;
+            }
+        }
+    
+    </script>
+</body>

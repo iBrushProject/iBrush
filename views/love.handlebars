@@ -1,0 +1,113 @@
+<link href="/main.css" rel="stylesheet">
+<title>Upload</title>
+<style>
+    .post_love {
+        padding: 25px 30px 30px 40px;
+        margin: 20px 0 0 180px;
+        width: 750px;
+        background-color: rgba(255, 255, 255, 0.911);
+        border-radius: 10px;
+        box-shadow: 2px 5px 5px 2px rgba(95, 95, 95, 0.384);
+    }
+
+    .title_love {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        color: #3f4244 ;    
+        height: 25px;
+        line-height: 25px;
+        margin: 30px auto;
+    }
+
+    /*提交文件*/
+    #file {
+        margin-top:30px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        height: 35px;
+        line-height: 35px;
+        color: #0a95FF;
+    
+    }
+
+       /* -----------提交按钮样式---------- */
+
+        #submit {
+            padding: 0.60em 1.6em;
+            margin-left: 315px;
+            color: rgba(41, 82, 172, 0.801);
+            border: 2px solid rgba(41, 82, 172, 0.801);
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 0.3em;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #submit:before {
+            content: "";
+            background-color: rgba(255, 255, 255, 0.5);
+            height: 100%;
+            width: 3em;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -4.5em;
+            transform: skewX(-45deg) translateX(0);
+            transition: none;
+        }
+
+        #submit:hover {
+            background-color: rgba(41, 82, 172, 0.801);
+            color: #fff;
+            border-bottom: 4px solid rgba(41, 82, 172, 0.801);
+        }
+
+        #submit:hover:before {
+            transform: skewX(-45deg) translateX(13.5em);
+            transition: all 0.5s ease-in-out;
+        }
+
+</style> 
+<div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+<div class="post_love">
+    <div>
+        <p class="title_love">赠人玫瑰，手有余香！欢迎各位小伙伴上传题目，充分发挥本平台的共享功能！</p>
+       <hr>
+        <form action="/upload" method="post">
+            <input type="file" id="file">
+            <input type="submit" value="提交" id="submit">
+        </form>
+    </div>
+</div>
+<script>
+    let submit = document.querySelector('#submit');
+    submit.onclick = function () {
+        window.alert("上传成功！");
+    }
+
+    /*显示和隐藏退出登录*/
+    var time = 1;
+    var logout = document.querySelector("#logout");
+    function show() {
+        if (time % 2 == 0) {
+            logout.style.display = "none";
+            time++;
+        } else {
+            logout.style.display = "block";
+            time++;
+        }
+    }
+</script>

@@ -1,0 +1,147 @@
+{{!调用题库专用模板--对答案，看解析}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer</title>
+    <link href="/main.css" rel="stylesheet">
+    <style>
+        .bank {
+            padding: 25px 30px 30px 40px;
+            margin: 20px 0 0 180px;
+            width: 750px;
+            background-color: rgba(255, 255, 255, 0.911);
+            border-radius: 10px;
+            box-shadow: 2px 5px 5px 2px rgba(95, 95, 95, 0.384);
+        }
+
+        .question {
+            margin:10px 10px 19px 0;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 30px;
+        }
+
+        .xuanxiang {
+            color: black;
+            font-size: 17px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 25px;
+            text-align: center;
+        }
+
+        .part a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .part {
+            font-size: 16px;
+        }
+
+        .part>li {
+            margin: 20px 0;
+        }
+
+        .part {
+            padding-left: 10px;
+        }
+
+        ol {
+            margin: 0px;
+            padding: 0;
+        }
+
+        .choice li {
+            display: inline;
+        }
+        .yourAns {
+            color: rgb(51, 48, 48);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .correct {
+            color: rgb(180, 47, 47);
+            font-weight:bold;
+            margin-top:10px;
+
+        }
+
+        .splitline {
+            background-color: rgb(197, 196, 196);
+            height: 1px;
+            margin: 30px 15px 0px 0px;
+        }
+
+     
+    </style>
+</head>
+
+<body>
+    <div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+    <div class="bank">
+        <h2>点击题目查看详细解答</h2>
+        <ol class="part">
+            {{#each banks}}
+            <li><a href="/ansview/{{this.id}}">
+                    <div class="question">{{this.question}}</div>
+
+                    <ol class="choice" style="list-style-type: none;">
+                        <li>
+                            <label>
+                                <span class="xuanxiang">A. {{this.choice_A}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <label>
+                                <span class="xuanxiang">B. {{this.choice_B}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <label>
+                                <span class="xuanxiang">C. {{this.choice_C}}</span>
+                            </label>
+                        </li><br>
+                        <li>
+                            <label>
+                                <span class="xuanxiang">D. {{this.choice_D}}</span>
+                            </label>
+                        </li><br>
+                    </ol>
+                    <br>
+                    <div class="yourAns">你的答案：<span>{{this.user_choice}}</span></div>
+                    <div class="correct">正确答案：<span>{{this.answer}}</span></div>
+                    <div class="splitline"></div>
+                </a>
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+<script>
+    /*显示和隐藏退出登录*/
+    var time = 1;
+    var logout = document.querySelector("#logout");
+    function show() {
+        if (time % 2 == 0) {
+            logout.style.display = "none";
+            time++;
+        } else {
+            logout.style.display = "block";
+            time++;
+        }
+    }
+</script>
+</body>
+
+</html>

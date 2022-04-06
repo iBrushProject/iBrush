@@ -1,0 +1,84 @@
+
+<title>iBrush</title>
+<script src="https://kit.fontawesome.com/bf028e75b3.js" crossorigin="anonymous"></script>
+<script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+<link href="main.css" rel="stylesheet">
+<div class="post1">
+    <div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+    <div class="mainpost">
+        <div class="past">
+            {{#each posts}}
+            <div class="eachpost">
+                <div class="brush">
+                    <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                </div>
+                <span class="postuser">{{this.username}}</span>
+                <span class="posttime">&nbsp;{{this.time_added}}</span>
+
+                <br>
+                <div id="past_content">
+                    <span><a href="/view/{{this.id}}" id="title">{{this.title}}</a></span>
+                    <br>
+                    <p id="cont">{{ limit this.content 50 }}</p>
+                    {{!-- 点赞、评论、删除帖子 --}}
+                    <div class="icons">
+                        <a href="/like/{{this.id}}" id="thumbsup">
+                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;&nbsp;点赞
+                        <span>{{this.likes}}</span>&nbsp;&nbsp;</a>
+                        <a href="/view/{{this.id}}" id="commenting">
+                                <i class="fa fa-commenting-o"
+                                    aria-hidden="true"></i>&nbsp;&nbsp;评论&nbsp;&nbsp;&nbsp;</a>
+                        <span>
+                            <a href="/delete/{{this.id}}" id="delete">
+                                <i class="fa fa-close" aria-hidden="true"></i>&nbsp;删除</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            {{/each}}
+        </div>
+
+
+        <div class="content">
+            <p id="newpost">发帖子</p>
+            <form method="POST" action="/">
+                <input type="text" id="text" name='title' placeholder="这是标题">
+                <br>
+                <textarea name='content' id="textarea" placeholder="这是内容"></textarea>
+                <br>
+                <input type="text" value="{{name}}" name="username" style="display: none;">
+                <input type="submit" id="submit">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    /*显示和隐藏退出登录*/
+    var time = 1;
+    var logout = document.querySelector("#logout");
+    function show() {
+        if (time % 2 == 0) {
+            logout.style.display = "none";
+            time++;
+        } else {
+            logout.style.display = "block";
+            time++;
+        }
+    }
+    /*点赞*/
+    $(function () {
+        $(".heart").on("click", function () {
+            $(this).toggleClass("is-active");
+        });
+    });
+</script>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="icon" href="./logoIcon.png">
+    <link rel="stylesheet" href="/login/login.css">
+    <script src="/login/login.js" type="text/JavaScript"></script>
+    <!--js设置!-->
+</head>
+
+<body>
+    <div class="whole">
+        <div class="form-container">
+            <div class="sign">
+                <form id="myform" action="/login" method="post">
+                    <h2 class="title">用户登录</h2>
+                    <div class="input-field">
+
+                        <input type="text" name="username" placeholder="请输入用户名" id="xm">
+                        <!--账号!-->
+                    </div>
+                    <div class="input-field">
+
+                        <input type="password" name="password" placeholder="请输入密码" id="mm">
+                    </div>
+                    <input type="submit" class="submit" value="登录">
+
+                    <p class="media">选择其他登录方式</p>
+                    <div class="medias">
+                        <ul>
+                            <li>
+                                <a href="https://wx.qq.com/">
+                                    <img src="/login/微信.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://passport.weibo.cn/signin/login">
+                                    <img src="/login/微博.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <img src="/login/QQ.svg">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://mail.qq.com/">
+                                    <img src="/login/邮箱.svg">
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="signup">
+                        还没有账号？点击<a href="/login/signup.html"><b>注册</b></a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="bigimg">
+        <img src="/login/2.svg" width="400px" height="400px">
+        <div class="slogan">
+            拿下每一题!
+        </div>
+    </div>
+
+</body>
+
+</html>

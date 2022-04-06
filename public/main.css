@@ -1,0 +1,272 @@
+/* post设置grid */
+a {
+    text-decoration: none;
+}
+
+/* post版body 含mainpost+user */
+div.post1{
+    margin: 8px 20px 10px 10px;
+    overflow:hidden;
+}
+
+/* 旧帖子+发表帖子区 */
+.mainpost{
+    margin-top: 15px ; 
+    margin-left:170px;
+    width:800px;
+}
+
+ /*----------用户那个圈圈的样式--------*/
+
+ .log {
+    width:110px;
+    height: 30px;
+    margin-top: 10px;
+    position: fixed;
+    top: 0.25em;
+    right: 18px;
+    z-index: 1000;
+    border: 2px solid #428cfc;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    display: inline-block;
+    background-color: white;
+}
+
+.log:before {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.438);
+    height: 100%;
+    width: 1em;
+    display: block;
+    position: absolute;
+    top: -0.5em;
+    left: -0.1em;
+    transform: skewX(-45deg) translateX(0);
+    transition: none;
+}
+
+.log:hover {
+    background-color: #E3ECFA;
+    color: #fff;
+}
+
+.log:hover:before {
+    transform: skewX(-45deg) translateX(13.5em);
+    transition: all 0.5s ease-in-out;
+}
+
+.user {
+    width: 90px;
+   
+    display: inline-block;
+    color: #428cfc;
+    margin-top: 6px;
+    text-align: center;
+} 
+
+/* 用户旁边的更多属性 */
+#more {
+    float: right;
+    position: absolute;
+    right: 9px;
+    top: 8.5px;
+    cursor: pointer;
+}
+
+/* 退出登录样式 */
+#logout {
+    width: 100px;
+    background-color: white;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 5px;
+    line-height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    display: none;
+}
+
+#logout input {
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+/* ---------------旧帖子----------------- */
+.past {
+    width: 850px;
+    padding:15px;
+    line-height: 35px;
+    border-top: lightblue 2px solid;
+    background-color: whitesmoke;
+}
+
+.eachpost{
+    padding:10px;
+    background:rgba(255, 255, 255, 0.897);
+}
+/* post用户名属性 */
+.postuser{
+    margin-top:10px;
+    color:rgba(30, 30, 31, 0.925);
+    font-size:14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+ /* post帖子时间属性 */
+ .posttime{
+    color:#696969;
+    font-family:monospace; 
+    font-weight:400;
+}
+/* 用户刷子头像 */
+.brush{
+    margin-right:10px;
+    margin-top:10px;
+    display: inline-block;
+    width:30px;
+    height:30px;
+    text-align: center;
+    color:#FFFFFF;
+    background: #556070;
+    border-radius: 50%;
+}
+
+/* 帖子标题+评论 */
+#past_content{
+    margin-left:45px;
+    font-size:14px;
+    margin-bottom: 30px;
+}
+
+/* 标题属性 */
+#title{
+    font-size:15px;
+    font-weight:bold;
+    text-decoration: none;
+    color:#4799d4;
+    border-left:solid 5px #4799d4;
+    padding-left:8px;
+}
+ /* 帖子删除属性 */
+#delete{
+    font-size:13px;
+    text-decoration: none;
+    color:#EA7584;
+}
+/* 旧帖子内容 */
+#cont{
+    font-size:14px;
+    border-radius:5px;
+    text-decoration: none;
+    margin-bottom:40px;
+}
+hr{
+    border:none;
+    border-top:1px solid #393b3d52;
+}
+/* 帖子点赞喜欢评论icon */
+.icons{
+    float:right;
+    margin-top:-30px;
+    font-size: 13px;
+}
+    
+/* 帖子删除属性 */
+#thumbsup{
+    color:#FF9A83;
+}  
+
+/* 帖子删除属性 */
+#delete{
+    font-size:13px;
+    text-decoration: none;
+    color:#EA7584;
+}
+
+#commenting{
+    color:#54BABF;
+}
+
+/* -----------发帖区---------- */
+.content {
+    line-height: 30px;
+    padding:15px;
+    margin-top:10px;
+    background-color:whitesmoke;
+    width:850px;
+}
+
+
+/* 发帖子属性 */
+#newpost{
+    font-size: 17px;
+    font-weight: 1000;
+    color: rgba(41, 82, 172, 0.801);
+    margin-left:10px;
+}
+
+#text{
+    margin-left:10px;
+    margin-top:10px;
+    width:800px;
+    border:none;
+    border-radius:5px;
+    height:40px;
+    border:1px solid rgba(41, 82, 172, 0.801);
+}
+
+#textarea{
+    margin-left:10px;
+    margin-top:15px;
+    width:800px;
+    height:100px;
+    border:none;
+    border-radius:5px;
+    border:1px solid rgba(41, 82, 172, 0.801);
+    resize: none;
+}
+
+
+/* -----------提交按钮样式---------- */
+
+#submit {
+    padding: 0.60em 1.6em;
+    margin-left: 375px;
+    color: rgba(41, 82, 172, 0.801);
+    border: 2px solid rgba(41, 82, 172, 0.801);
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    border-radius: 0.3em;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+#submit:before {
+    content: "";
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 100%;
+    width: 3em;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: -4.5em;
+    transform: skewX(-45deg) translateX(0);
+    transition: none;
+}
+
+#submit:hover {
+    background-color: rgba(41, 82, 172, 0.801);
+    color: #fff;
+    border-bottom: 4px solid rgba(41, 82, 172, 0.801);
+}
+
+#submit:hover:before {
+    transform: skewX(-45deg) translateX(13.5em);
+    transition: all 0.5s ease-in-out;
+}

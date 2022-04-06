@@ -1,0 +1,184 @@
+<link href="/main.css" rel="stylesheet">
+<title>Posts</title>
+<style>
+    /* 显示post内容 */
+    .viewpost {
+        width: 830px;
+        line-height: 35px;
+        padding: 15px;
+        padding-right: 25px;
+        border-bottom: lightblue 2px solid;
+        background-color: whitesmoke;
+    }
+
+    /* 旧评论区大小 */
+    .past {
+        width: 830px;
+        padding-right: 25px;
+    }
+
+    /* 发评区大小 */
+    .content {
+        width: 840px;
+    }
+
+    /* viewpost标题属性 */
+    .viewpost h2 {
+        padding-left: 2px;
+        border-left: 8px solid #428cfc;
+    }
+
+    /* viewpost帖子用户属性 */
+    .from {
+        font-size: 15px;
+        color: rgba(41, 82, 172, 0.801);
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-weight: bold;
+    }
+
+    /* viewpost帖子时间属性 */
+    .posttime {
+        font-family: monospace;
+        font-weight: bold;
+    }
+
+    /* viewpost内容 */
+    .viewpost p {
+        font-size: 14px;
+        margin-bottom: 40px;
+    }
+
+    /* post delete属性 */
+    #delete {
+        font-size: 13px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #EA7584;
+        float: right;
+        margin-top: -30px;
+    }
+
+    /* 发帖子属性 */
+    #newpost {
+        font-size: 17px;
+        font-weight: 1000;
+        color: rgba(41, 82, 172, 0.801);
+        margin-left: 10px;
+    }
+
+    #text {
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 800px;
+        border: none;
+        border-radius: 5px;
+        height: 40px;
+        border: 1px solid rgba(41, 82, 172, 0.801);
+    }
+
+    #textarea {
+        margin-left: 10px;
+        margin-top: 15px;
+        width: 800px;
+        height: 100px;
+        border: none;
+        border-radius: 5px;
+        border: 1px solid rgba(41, 82, 172, 0.801);
+        resize: none;
+    }
+
+    /* 评论点赞删除图标 */
+    .icons {
+        float: right;
+        font-size: 13px;
+        margin-right: 5px;
+    }
+
+    /* 帖子删除属性 */
+    #comdelete {
+        font-size: 13px;
+        text-decoration: none;
+        color: #EA7584;
+    }
+
+    /* 评论点赞 */
+    #thumbsup {
+        color: #FF9A83;
+        text-decoration: none;
+    }
+
+    /*每条评论的分割线*/
+    .splitline {
+        background-color: rgb(197, 196, 196, 0.74);
+        height: 0.5px;
+        margin: 10px 5px 10px 5px;
+    }
+</style>
+<div class="post1">
+    <div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+    <div class="mainpost">
+        <div class="viewpost">
+            <h2>&nbsp;{{post.title}}</h2>
+            <span class="from">From&nbsp;&nbsp;{{post.username}}</span>
+            <span class="posttime">&nbsp;{{post.time_added}}</span>
+            <p>
+                {{post.content}}
+            </p>
+            <a href="/delete/{{post.id}}" id="delete">Delete</a>
+        </div>
+
+        <div class="past">
+            <h5 id="newpost">Comments</h5>
+            {{#each comments}}
+            <div class="brush">
+                <i class="fa fa-paint-brush" aria-hidden="true"></i>
+            </div>
+            <span class="postuser">{{this.username}}</span>
+            <span class="posttime">{{this.time_added}}</span>
+            <p id="past_content">{{this.content}}</p>
+            <div class="icons">
+                <a href="/likeCom/{{this.id}}" id="thumbsup">
+                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>&nbsp;点赞
+                    <span>{{this.likes}}&nbsp;&nbsp;&nbsp;</span></a>
+                <a href="/deleteCom/{{this.id}}" id="comdelete">
+                    <i class="fa fa-close" aria-hidden="true"></i>&nbsp;删除
+                </a>
+            </div>
+            <div class="splitline"></div>
+            {{/each}}
+        </div>
+
+        <div class="content">
+            <h5 id="newpost">New Comments</h5>
+            <form method="POST" action="/newComment">
+                <input type="text" name="postid" value="{{post.id}}" style="display: none;">
+                <textarea name="comment" id="textarea" placeholder="comment"></textarea>
+                <br>
+                <input type="text" value="{{name}}" name="username" style="display: none;">
+                <input type="submit" id="submit">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    /*显示和隐藏退出登录*/
+    var time = 1;
+    var logout = document.querySelector("#logout");
+    function show() {
+        if (time % 2 == 0) {
+            logout.style.display = "none";
+            time++;
+        } else {
+            logout.style.display = "block";
+            time++;
+        }
+    }
+</script>

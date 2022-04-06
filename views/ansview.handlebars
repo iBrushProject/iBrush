@@ -1,0 +1,411 @@
+{{!调用题库专用模板--对答案，看解析}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    <style>
+        /*----------用户那个圈圈的样式--------*/
+
+        .log {
+            width: 110px;
+            height: 30px;
+            margin-top: 10px;
+            position: fixed;
+            top: 0.25em;
+            right: 18px;
+            z-index: 1000;
+            border: 2px solid #428cfc;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            display: inline-block;
+            background-color: white;
+        }
+
+        .log:before {
+            content: "";
+            background-color: rgba(255, 255, 255, 0.438);
+            height: 100%;
+            width: 1em;
+            display: block;
+            position: absolute;
+            top: -0.5em;
+            left: -0.1em;
+            transform: skewX(-45deg) translateX(0);
+            transition: none;
+        }
+
+        .log:hover {
+            background-color: #E3ECFA;
+            color: #fff;
+        }
+
+        .log:hover:before {
+            transform: skewX(-45deg) translateX(13.5em);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .user {
+            width: 90px;
+
+            display: inline-block;
+            color: #428cfc;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* 用户旁边的更多属性 */
+        #more {
+            float: right;
+            position: absolute;
+            right: 9px;
+            top: 8.5px;
+        }
+
+        /* 退出登录样式 */
+        #logout {
+            width: 100px;
+            background-color: white;
+            position: absolute;
+            margin-top: 15px;
+            margin-left: 5px;
+            line-height: 30px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        #logout input {
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* 答案解析+评论 */
+        .mainpost {
+            padding: 25px 30px 30px 25px;
+            margin: 20px 0 0 180px;
+            width: 750px;
+            background-color: rgba(255, 255, 255, 0.911);
+            border-radius: 10px;
+            box-shadow: 2px 5px 5px 2px rgba(95, 95, 95, 0.384);
+        }
+
+        .question {
+            margin: 10px 10px 19px 0;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 30px;
+        }
+
+        .xuanxiang {
+            color: black;
+            font-size: 17px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            line-height: 25px;
+            text-align: center;
+        }
+
+        .part {
+            border-bottom: 1px solid black;
+        }
+
+        .part>li {
+            margin: 20px 0;
+        }
+
+        .part {
+            padding-left: 10px;
+        }
+
+        ol {
+            margin: 0px;
+            padding: 0;
+        }
+
+        .choice li {
+            display: inline;
+        }
+
+        .yourAns {
+            color: rgb(51, 48, 48);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .correct {
+            color: rgb(180, 47, 47);
+            font-weight: bold;
+            margin-top: 10px;
+
+        }
+
+        .explain,
+        .type {
+            color: rgb(47, 94, 180);
+            font-weight: bold;
+            margin-top: 10px;
+
+        }
+
+        .viewpost {
+            border: 2px solid black;
+            line-height: 35px;
+            padding: 20px;
+            border: rgba(99, 100, 100, 0.226) 2px solid;
+            background-color: rgba(255, 255, 255, 0.685);
+        }
+
+        /*以下交给汤总,加入delete和点赞的样式，还有用户头像（刷子）*/
+        .past,
+        .content {
+            line-height: 30px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .time1 {
+            color: #696969;
+            font-family: Georgia;
+            font-weight: 400;
+        }
+
+        /*每条评论的分割线*/
+        .splitline {
+            background-color: rgb(197, 196, 196, 0.74);
+            height: 0.5px;
+            margin: 30px 5px 10px 5px;
+        }
+
+        /*发表评论*/
+        #comment {
+            font-size: 17px;
+            font-weight: 1000;
+            color: rgba(23, 23, 24, 0.801);
+        }
+
+        #newpost {
+            font-size: 17px;
+            font-weight: 1000;
+            color: rgba(23, 23, 24, 0.801);
+        }
+
+        #textarea {
+            margin: 10px 20px 0 10px;
+            width: 700px;
+            height: 100px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(72, 142, 160, 0.11);
+            resize: none;
+        }
+
+        /* post用户名属性 */
+        .postuser {
+            margin-top: 10px;
+            color: rgba(30, 30, 31, 0.925);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* post帖子时间属性 */
+        .posttime {
+            color: #696969;
+            font-family: monospace;
+            font-weight: 400;
+        }
+
+        /* 用户刷子头像 */
+        .brush {
+            margin-right: 10px;
+            margin-top: 10px;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            color: #FFFFFF;
+            background: #556070;
+            border-radius: 50%;
+        }
+
+        #cont {
+            margin-left: 45px;
+            font-size: 15px;
+        }
+
+        /* 评论点赞删除图标 */
+        .icons {
+            float: right;
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        /* 帖子删除属性 */
+        #delete {
+            font-size: 13px;
+            text-decoration: none;
+            color: #EA7584;
+        }
+
+        /* 评论点赞 */
+        #thumbsup {
+            color: #FF9A83;
+            text-decoration: none;
+        }
+
+        /* 发表评论标题 */
+        #newpost {
+            font-size: 17px;
+            font-weight: 1000;
+            color: rgba(41, 82, 172, 0.801);
+            margin-left: 10px;
+        }
+
+
+        /* -----------提交按钮样式---------- */
+
+        #submit {
+            padding: 0.60em 1.6em;
+            margin-left: 315px;
+            color: rgba(41, 82, 172, 0.801);
+            border: 2px solid rgba(41, 82, 172, 0.801);
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 0.3em;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #submit:before {
+            content: "";
+            background-color: rgba(255, 255, 255, 0.5);
+            height: 100%;
+            width: 3em;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: -4.5em;
+            transform: skewX(-45deg) translateX(0);
+            transition: none;
+        }
+
+        #submit:hover {
+            background-color: rgba(41, 82, 172, 0.801);
+            color: #fff;
+            border-bottom: 4px solid rgba(41, 82, 172, 0.801);
+        }
+
+        #submit:hover:before {
+            transform: skewX(-45deg) translateX(13.5em);
+            transition: all 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="log">
+        <div class="user">
+            <div id="loguser">{{name}}</div>
+            <i class="fa fa-bars" aria-hidden="true" id="more" onclick="show()"></i>
+        </div>
+        <form method="get" action="/logout" id="logout">
+            <input type="submit" value="退出登录">
+        </form>
+    </div>
+    <div class="post1">
+        <div class="mainpost">
+            <div class="viewpost">
+                <div class="question">{{post.question}}</div>
+                <ol class="choice" style="list-style-type: none;">
+                    <li>
+                        <label>
+                            <span class="xuanxiang">A. {{post.choice_A}}</span>
+                        </label>
+                    </li><br>
+                    <li>
+                        <label>
+                            <span class="xuanxiang">B. {{post.choice_B}}</span>
+                        </label>
+                    </li><br>
+                    <li>
+                        <label>
+                            <span class="xuanxiang">C. {{post.choice_C}}</span>
+                        </label>
+                    </li><br>
+                    <li>
+                        <label>
+                            <span class="xuanxiang">D. {{post.choice_D}}</span>
+                        </label>
+                    </li><br>
+                </ol>
+                <br>
+                <div><span class="yourAns">你的答案：{{post.user_choice}}</span></div>
+                <div><span class="correct">正确答案：{{post.answer}}</span></div>
+                <div><span class="explain">题目详解：</span><span>{{post.views}}</span></div>
+                <div><span class="type">试题分类：</span><span>{{post.year}}年</span>&nbsp;&nbsp;<span>{{post.type}}</span>
+                </div>
+            </div>
+
+            <div class="past">
+                <p id="comment">评论区</p>
+
+                {{#each comments}}
+                <div class="brush">
+                    <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                </div>
+                <span class="postuser">{{this.username}}</span>
+                <span class="posttime">{{this.time_added}}</span>
+
+                {{!-- 点赞的likes文字可以直接用图标代替 --}}
+
+                <br>
+                <p id="cont">{{this.content}}</p>
+                <div class="icons">
+                    <a href="/likeAnsCom/{{this.id}}" id="thumbsup"><i class="fa fa-thumbs-o-up"
+                            aria-hidden="true"></i>&nbsp;点赞<span>&nbsp;{{this.likes}}&nbsp;&nbsp;</span></a>
+                    <a href="/deleteAnsCom/{{this.id}}" id="delete"><i class="fa fa-close"
+                            aria-hidden="true"></i>&nbsp;删除</a>
+                </div>
+                <div class="splitline"></div>
+                {{/each}}
+
+            </div>
+
+            <div class="content">
+                <p id="newpost">发表评论</p>
+                <form method="POST" action="/newAnsComment">
+                    <input type="text" name="postid" value="{{post.id}}" style="display: none;">
+                    <textarea name='comment' id="textarea" placeholder="发表你的评论"></textarea>
+                    <br>
+                    <input type="text" value="{{name}}" name="username" style="display: none;">
+                    <input type="submit" id="submit" value="发表">
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        /*显示和隐藏退出登录*/
+        var time = 1;
+        var logout = document.querySelector("#logout");
+        function show() {
+            if (time % 2 == 0) {
+                logout.style.display = "none";
+                time++;
+            } else {
+                logout.style.display = "block";
+                time++;
+            }
+        }
+    </script>
+</body>
+
+</html>
